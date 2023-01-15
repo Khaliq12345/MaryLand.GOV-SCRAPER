@@ -48,7 +48,7 @@ def clean_data(df):
     df['Middle Name'] = middle_name
     df['Last Name'] = last_name
     df['Suffix'] = suffix
-    df.drop(columns=['Name'])
+    df.drop(columns=['Name'], inplace=True)
 
     st.dataframe(df)
     csv = df.to_csv(index=False).encode('utf-8')
