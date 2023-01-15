@@ -77,7 +77,7 @@ def get_data(links):
         )
         address = soup.select_one("#lblPersonalReps small").text.title()
 
-        items = {"Name": name, "Address": address}
+        items = {"Name": name, "Prsonal Rep Address": address}
 
         item_list.append(items)
         sleep(2)
