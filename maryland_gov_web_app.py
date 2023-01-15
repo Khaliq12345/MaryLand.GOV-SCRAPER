@@ -97,7 +97,7 @@ def get_links():
 
         page.get_by_role("button", name="I Agree To The Terms And Conditions").click()
         page.wait_for_load_state("networkidle", timeout=10000000)
-        page.locator("#cboCountyId").select_option("2")
+        page.locator("#cboCountyId").select_option(f"{selected_county}")
         page.locator("#cboStatus").select_option("OPEN")
         page.locator("#cboType").select_option("RE")
         page.locator("#cboPartyType").select_option("Personal Representative")
@@ -145,6 +145,12 @@ st.title('MaryLand.GOV SCRAPER')
 st.caption('Input a valid date. Any change in format in the date can cause an error in this web app')
 date_from = st.text_input('Date Range from', placeholder='12/1/2022')
 date_to = st.text_input('Date Range to', placeholder='01/15/2023')
+counties = [("Allegany", '1'), ("Anne Arundel", '2'), ("Baltimore", '3'), ("Baltimore City", '24'), ("Calvert", '4'), ("Caroline", '5'), ("Carroll", '6'), ("Cecil", '7'),
+           ("Charles", '8'), ("Dorchester", '9'), ("Frederick", '10'), ("Garrett", '11'), ("Harford", '12'), ("Howard", '13'), ("Kent", '14'), ("Montgomery", '15'),
+           ("Prince George's", '16'), ("Queen Anne's", '17'), ("Somerset", '19'), ("St. Mary's", '18'), ("Talbot", '20'), ("Washington", '21'), ("Wicomico", '22'), ("Worcester", '23')]
+
+county = st.selectbox("Select an option", counties)
+selected_county = county[1]
 
 button = st.button('Scrape!')
 
@@ -152,5 +158,6 @@ if button:
     get_links()
     st.balloons()
     st.success('Done!')
+
 
 
