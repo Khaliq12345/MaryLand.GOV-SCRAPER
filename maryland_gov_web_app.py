@@ -25,9 +25,6 @@ def clean_data(df):
     last_name = []
     middle_name = []
     suffix = []
-    street_address = []
-    city = []
-    state_zip = []
 
     for x in df['Name']:
         name = x.split(' ')
@@ -52,17 +49,6 @@ def clean_data(df):
     df['Last Name'] = last_name
     df['Suffix'] = suffix
     df.drop(columns=['Name'])
-
-    for y in df['Address']:
-        address = y.split(',')
-        street_address.append(address[0])
-        city.append(address[1])
-        state_zip = address[2]
-     
-    df['Street Address'] = street_address
-    df['City'] = city
-    df['State'] = state_zip
-    df.drop(columns=['Address'], inplace=True)
 
     st.dataframe(df)
     csv = df.to_csv(index=False).encode('utf-8')
