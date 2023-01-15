@@ -27,8 +27,7 @@ def clean_data(df):
     suffix = []
     street_address = []
     city = []
-    state = []
-    zip_code = []
+    state_zip = []
 
     for x in df['Name']:
         name = x.split(' ')
@@ -54,23 +53,15 @@ def clean_data(df):
     df['Suffix'] = suffix
     df.drop(columns=['Name'])
 
-    street_address = []
-    city = []
-    state = []
-    zip_code = []
     for y in df['Address']:
         address = y.split(',')
         street_address.append(address[0])
         city.append(address[1])
         state_zip = address[2]
-        zip_code.append(state_zip[3:])
-        state.append(state_zip.replace(state_zip[3:], ''))
-        
-
+     
     df['Street Address'] = street_address
     df['City'] = city
-    df['State'] = state
-    df['Zip Code'] = zip_code
+    df['State'] = state_zip
     df.drop(columns=['Address'], inplace=True)
 
     st.dataframe(df)
