@@ -6,63 +6,6 @@ import re
 from time import sleep
 from latest_user_agents import get_random_user_agent
 
-def clean_data(df):
-    first_name = []
-    last_name = []
-    middle_name = []
-    suffix = []
-    street_address = []
-    city = []
-    state = []
-    zip_code = []
-
-    for x in df['Name']:
-        name = x.split(' ')
-        if len(name) == 3:
-            first_name.append(name[0])
-            middle_name.append(name[1])
-            last_name.append(name[2])
-            suffix.append(' ')
-        elif len(name) == 2:
-            first_name.append(name[0])
-            last_name.append(name[1])
-            middle_name.append(' ')
-            suffix.append(' ')
-        else:
-            first_name.append(name[0])
-            middle_name.append(name[1])
-            last_name.append(name[2])
-            suffix.append(name[3])       
-
-    df['First Name'] = first_name
-    df['Middle Name'] = middle_name
-    df['Last Name'] = last_name
-    df['Suffix'] = suffix
-    df.drop(columns=['Name'])
-
-    street_address = []
-    city = []
-    state = []
-    zip_code = []
-    for y in df['Address']:
-        address = y.split(',')
-        street_address.append(address[0])
-        city.append(address[1])
-        state_zip = address[2]
-        zip_code.append(state_zip[3:])
-        state.append(state_zip.replace(state_zip[3:], ''))
-        
-
-    df['Street Address'] = street_address
-    df['City'] = city
-    df['State'] = state
-    df['Zip Code'] = zip_code
-    df.drop(columns=['Address'], inplace=True)
-
-    df.to_csv('maryland_gov.csv', index=False)
-
-    return df
-
 
 def get_data(links):
     item_list = []
@@ -86,8 +29,6 @@ def get_data(links):
 
     df = pd.DataFrame(item_list)
     clean_data(df)
-
-
 
 def get_links():
     links = []
