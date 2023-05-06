@@ -68,11 +68,10 @@ def get_data(links):
     col1, col2 = st.columns(2)
     progress = col1.metric('Rep scraped', 0)
     n = 0
-    s = session()
     for link in links:
         n = n + 1
         header = {"User-Agent": get_random_user_agent()}
-        response = s.get(f"{link}")  # headers=header)
+        response = requests.get(f"{link}")  # headers=header)
         progress.metric('Personal Reps Data scraped', value=n)
         soup = BeautifulSoup(response.text, "lxml")
         address = soup.select_one("#lblPersonalReps small").text
