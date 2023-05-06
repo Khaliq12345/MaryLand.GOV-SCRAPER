@@ -12,7 +12,7 @@ from latest_user_agents import get_random_user_agent
 
 st.set_page_config(
     page_title= 'MaryLand.GOV SCRAPER', 
-    page_icon=":smile:"
+    page_icon=":smile:",
     layout="wide",
     initial_sidebar_state="expanded"
     )
