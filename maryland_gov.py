@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+from requests import session
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 import re
@@ -10,10 +11,11 @@ from latest_user_agents import get_random_user_agent
 def get_data(links):
     item_list = []
     n = 0
+    s = session()
     for link in links:
         n = n + 1
         header = {"User-Agent": get_random_user_agent()}
-        response = requests.get(f"{link}")  # headers=header)
+        response = s.get(f"{link}")  # headers=header)
         print(f"Link {n}")
         soup = BeautifulSoup(response.text, "lxml")
         address = soup.select_one("#lblPersonalReps small").text
@@ -62,9 +64,7 @@ def get_links():
 
         n = 1
         for i in range(1, int(number) + 1):
-            print(f"Page {n}")
             soup = BeautifulSoup(page.content(), "lxml")
-            print("good")
             table = soup.select_one("#dgSearchResults")
             rows = table.select("tr")
             for row in rows:
@@ -90,6 +90,3 @@ def get_links():
                 pass
         browser.close()
         get_data(links)
-
-
-get_links()

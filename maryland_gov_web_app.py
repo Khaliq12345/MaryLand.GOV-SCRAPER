@@ -3,6 +3,7 @@ os.system("playwright install chromium")
 import streamlit as st
 import pandas as pd
 import requests
+from requests import session
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 import re
@@ -62,16 +63,16 @@ def clean_data(df):
     mime='text/csv',
     )
 
-   
 def get_data(links):
     item_list = []
     col1, col2 = st.columns(2)
     progress = col1.metric('Rep scraped', 0)
     n = 0
+    s = session()
     for link in links:
         n = n + 1
         header = {"User-Agent": get_random_user_agent()}
-        response = requests.get(f"{link}")  # headers=header)
+        response = s.get(f"{link}")  # headers=header)
         progress.metric('Personal Reps Data scraped', value=n)
         soup = BeautifulSoup(response.text, "lxml")
         address = soup.select_one("#lblPersonalReps small").text
@@ -118,9 +119,7 @@ def get_links():
 
         n = 1
         for i in range(1, int(number) + 1):
-            st.text(f"Page {n}")
             soup = BeautifulSoup(page.content(), "lxml")
-            st.text("good")
             table = soup.select_one("#dgSearchResults")
             rows = table.select("tr")
             for row in rows:
