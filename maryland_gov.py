@@ -128,11 +128,14 @@ def get_links():
             rows = table.select("tr")
             for row in rows:
                 if "County" not in row.text:
-                    url = row.select_one("a")["href"]
-                    url = "https://registers.maryland.gov/RowNetWeb/Estates/" + url
-                    if "javascript" not in url:
-                        links.append(url)
-                    else:
+                    try:
+                        url = row.select_one("a")["href"]
+                        url = "https://registers.maryland.gov/RowNetWeb/Estates/" + url
+                        if "javascript" not in url:
+                            links.append(url)
+                        else:
+                            pass
+                    except:
                         pass
                 else:
                     pass
