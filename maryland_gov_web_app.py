@@ -10,10 +10,16 @@ import re
 from time import sleep
 from latest_user_agents import get_random_user_agent
 
+st.set_page_config(
+    page_title= 'MaryLand.GOV SCRAPER', 
+    page_icon=":smile:"
+    layout="wide",
+    initial_sidebar_state="expanded"
+    )
+
 if 'access' not in st.session_state:
     st.session_state['access'] = False
 
-st.set_page_config(page_title= 'MaryLand.GOV SCRAPER', page_icon=":smile:")
 hide_menu = """
 <style>
 #MainMenu {
